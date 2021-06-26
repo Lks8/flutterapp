@@ -66,13 +66,10 @@ class _CityListState extends State<SelectCity> {
         ],
       ),
       body: new Card(
-        child: new InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Chosen()),
-            );
-          },
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => Chosen()),
+            // );
           child: Column(
             children: cities
                 .map((city) => CityItem(
@@ -85,7 +82,6 @@ class _CityListState extends State<SelectCity> {
                 .toList(),
           ),
         ),
-      ),
     );
   }
 }

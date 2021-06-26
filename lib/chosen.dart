@@ -5,48 +5,44 @@ import 'cityItem.dart';
 import 'main.dart';
 
 class Chosen extends StatelessWidget {
-  List<City> cities = [
-    City(
-        customName: "Cidade da mamãe",
-        name: "São Paulo - Brasil",
-        temperature: 28,
-        minTemperature: 20,
-        maxTemperature: 32),
-    City(
-        customName: "Meu Local",
-        name: "Buenos Aires - Argentina",
-        temperature: 15,
-        minTemperature: 13,
-        maxTemperature: 20)
-  ];
+  City city;
 
   @override
   Widget build(BuildContext context) {
+    city = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       backgroundColor: Color.fromRGBO(31, 121, 214, 1),
       body: Padding(
         padding: MediaQuery.of(context).padding,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            new Column(
-              children: [
-                Container(
-                  child: Text(
-                      "Casa da mamãe",
-                      style: TextStyle(color: Colors.white))
+            Padding(
+            padding: const EdgeInsets.all(12.0),
+              child: Container(
+                height: 100,
+                width: 278,
+                color: Color.fromRGBO(4, 51, 118, 1),
+                child: Column(
+                  children: [
+                    Text("Casa da mamãe",
+                        style: TextStyle(color: Colors.white, fontSize: 30),
+                    ),
+                    Text("São Paulo - Brasil",
+                        style: TextStyle(color: Colors.grey, fontSize: 25)
+                    ),
+                  ],
                 ),
-                IconButton(
-                  icon: const Icon(Icons.arrow_back_rounded),
-                  color: Colors.white,
-                  onPressed: () {
-                    Navigator.pop(
-                      context,
-                      MaterialPageRoute(builder: (context) => SelectCity()),
-                    );
-                  },
-                ),
-              ],
+              ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.arrow_back_rounded),
+              color: Colors.white,
+              onPressed: () {
+                Navigator.pop(
+                  context,
+                  MaterialPageRoute(builder: (context) => SelectCity()),
+                );
+              },
             ),
           ],
         ),

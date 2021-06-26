@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'chosen.dart';
 import 'city.dart';
+import 'custom.dart';
 
 class CityItem extends StatelessWidget {
   final City city;
   final Function add;
-  final Function edit;
-  CityItem({this.city, this.add, this.edit});
+  final Function delete;
+  CityItem({this.city, this.add, this.delete});
 
   get child => null;
 
@@ -18,7 +20,14 @@ class CityItem extends StatelessWidget {
         child: new Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            new Column(
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Chosen()),
+                );
+            },
+            child: new Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -37,11 +46,15 @@ class CityItem extends StatelessWidget {
                 ),
               ],
             ),
+      ),
             new Column(
               children: [
                 Text(
                   city.temperature.toString() + "°C",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
                 ),
                 SizedBox(
                   height: 12,
@@ -51,7 +64,11 @@ class CityItem extends StatelessWidget {
                       " a " +
                       city.maxTemperature.toString() +
                       "°C",
-                  style: TextStyle(fontSize: 14, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold, color: Colors.grey[600]),
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontStyle: FontStyle.italic,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey[600]),
                 ),
                 SizedBox(
                   height: 8,
@@ -59,6 +76,7 @@ class CityItem extends StatelessWidget {
               ],
             ),
           ],
+
         ),
       ),
     );
