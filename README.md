@@ -1,16 +1,35 @@
-# tempo_clima
+# Weather_Flutter_Project
 
-Sobre o clima
+Esse repositório servirá para armazenar o código-fonte da aplicação mobile.
 
-## Getting Started
+## Membros do Grupo
 
-This project is a starting point for a Flutter application.
+Aluno: Lucas Negresiolo  Libório     17.01165-5
 
-A few resources to get you started if this is your first Flutter project:
+Aluno: Lucas Martins Coelho         15.03863-7
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Aluno: Enricco Diniz             17.00165-0
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Objetivo
+
+O objetivo do projeto é construir uma aplicação mobile responsável por acessar uma API de Climatempo e mostrar os resultados em uma tela.
+
+## Funcionamento
+
+O projeto possui 4 telas:
+
+* Menu de Seleção
+
+* Personalização
+
+* Adição de localizações
+
+* Localização escolhida
+
+O menu de seleção mostrará as cidades escolhidas com suas respectivas temperaturas, e também um botão onde será possível adicionar novas localidades.
+O menu de personalização permitirá remover as localidades.
+O menu de adição de localizações permitirá adicionar localidades.
+A tela de Localização escolhida permitirá ver informações aprofundadas de temperatura daquela localidade.
+
+## Protótipo
+[Protótipo das Telas](https://marvelapp.com/prototype/5c475ea)
