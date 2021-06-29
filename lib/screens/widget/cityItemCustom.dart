@@ -22,7 +22,6 @@ class CityItemCustom extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                print(city.customName);
                 Navigator.pushNamed(
                   context,
                   '/chosen',
@@ -54,7 +53,7 @@ class CityItemCustom extends StatelessWidget {
                 IconButton(
                   icon: Icon(Icons.delete, color: Colors.red),
                   onPressed: () {
-                    cities.remove(1);
+                    delete();
                   },
                 )
               ],

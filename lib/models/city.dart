@@ -1,5 +1,10 @@
 import 'package:uuid/uuid.dart';
 
+class CityFields {
+  static final String customName = 'customName';
+  static final String name = 'name';
+}
+
 class City{
   String customName;
   String name;
@@ -10,7 +15,6 @@ class City{
   int humidity;
 
   City({
-
     this.customName,
     this.name,
     this.temperature,
@@ -28,4 +32,23 @@ class City{
       pressure = json['main']['pressure'].toInt();
       humidity = json['main']['humidity'].toInt();
   }
+
+  City copy({
+    String customName,
+    String name,
+  }) =>
+      City(
+        customName: customName ?? this.customName,
+        name: name ?? this.name,
+      );
+
+  static City deJson(Map<String, Object> json) => City(
+    customName: json[CityFields.customName] as String,
+    name: json[CityFields.name] as String,
+  );
+
+  Map<String, Object> toJson() => {
+    CityFields.customName: customName,
+    CityFields.name: name,
+  };
 }

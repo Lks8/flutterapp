@@ -16,7 +16,6 @@ class CityItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
         child: GestureDetector(
           onTap: () {
-            print(city.customName);
             Navigator.pushNamed(
               context,
               '/chosen',
