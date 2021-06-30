@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tempo_clima/db/notes_database.dart';
+import 'package:hive/hive.dart';
 import 'package:tempo_clima/models/city.dart';
 import 'package:tempo_clima/screens/widget/cityItemCustom.dart';
 import 'package:tempo_clima/main.dart';
@@ -7,6 +7,7 @@ import 'package:tempo_clima/main.dart';
 class Custom extends StatefulWidget {
   final List<City> cities;
   const Custom({this.cities});
+
   @override
   _Custom createState() => _Custom();
 }
@@ -55,10 +56,13 @@ class _Custom extends State<Custom> {
                       cities.add(city);
                     });
                   },
-                  delete: () {
+                  delete: () async {
+                    var box = await Hive.openBox('SavedCities');
+                    List<City> savedCities = box.get("Cidades");
+                    savedCities.removeAt(savedCities.indexOf(city));
+                    print(box.get('Cidades'));
                     setState(() {
                       cities.removeAt(cities.indexOf(city));
-                      NotesDatabase.instance.delete(city.customName);
                     });
                   },
                 ))

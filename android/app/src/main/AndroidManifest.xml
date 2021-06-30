@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tempo_clima">
    <application
-        android:label="tempo_clima"
+        android:label="Weather"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

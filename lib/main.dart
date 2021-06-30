@@ -1,20 +1,27 @@
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:tempo_clima/repositories/cityRepository.dart';
 import 'package:tempo_clima/screens/addnew.dart';
 import 'package:tempo_clima/screens/chosen.dart';
 import 'package:tempo_clima/screens/widget/cityItem.dart';
 import 'dart:async';
-
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
-
-import 'db/notes_database.dart';
 import 'models/city.dart';
 import 'screens/custom.dart';
 
-void main() {
+void main() async {
+  // var path = Directory.current.path;
+  // var dir = Directory(path);
+  // await dir.create(recursive: true);
+  // Hive..init(path)..registerAdapter(CityAdapter());
+  var box = await Hive.openBox('SavedCities');
+  List<City> cities = [];
+  var cidades = box.get('Cidades');
+  if(cidades==null) {
+    box.put('Cidades', cities);
+  }
+
   runApp(MaterialApp(
     home: SelectCity(),
     onGenerateRoute: (RouteSettings settings) {
@@ -26,7 +33,6 @@ void main() {
       };
       WidgetBuilder builder = routes[settings.name];
       return MaterialPageRoute(builder: (ctx) => builder(ctx));
-
     },
   ));
 }
@@ -42,7 +48,6 @@ class SelectCity extends StatefulWidget {
 class _CityListState extends State<SelectCity> {
   List<City> cities = [];
   CityRepository cityRepository = new CityRepository();
-  final _formKey = GlobalKey<FormState>();
 
   @override
   void didChangeDependencies() {
@@ -83,9 +88,12 @@ class _CityListState extends State<SelectCity> {
                 onPressed: () async {
                   var retorno = await Navigator.pushNamed(context, "/add");
                   if (retorno is String) {
-                    cityRepository.fetchCityWeather(retorno).then((value) {
-                      City newCity =
-                          new City.fromJson(jsonDecode(value), retorno);
+                    cityRepository.fetchCityWeather(retorno).then((value) async {
+                      City newCity = new City.fromJson(jsonDecode(value), retorno);
+                      var box = await Hive.openBox('SavedCities');
+                      List<City> savedCities = box.get("Cidades");
+                      savedCities.add(newCity);
+                      print(box.get('Cidades')); // Garantia de persistencia dos dados
                       setState(() {
                         cities.add(newCity);
                         super.didChangeDependencies();
@@ -104,7 +112,6 @@ class _CityListState extends State<SelectCity> {
                   add: () {
                     setState(() {
                       cities.add(city);
-                      addCity(city);
                     });
                   }))
               .toList(),
@@ -113,11 +120,4 @@ class _CityListState extends State<SelectCity> {
     );
   }
 
-  Future addCity(City city) async {
-    final isValid = _formKey.currentState.validate();
-
-    if (isValid) {
-      await NotesDatabase.instance.create(city);
-    }
-  }
 }

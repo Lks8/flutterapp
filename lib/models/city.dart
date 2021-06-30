@@ -1,18 +1,27 @@
-import 'package:uuid/uuid.dart';
+import 'package:hive/hive.dart';
 
-class CityFields {
-  static final String customName = 'customName';
-  static final String name = 'name';
-}
+part 'city.g.dart';
 
+@HiveType(typeId: 1)
 class City{
+  @HiveField(0)
   String customName;
+  @HiveField(1)
   String name;
+  @HiveField(2)
   int temperature;
+  @HiveField(3)
   int minTemperature;
+  @HiveField(4)
   int maxTemperature;
+  @HiveField(5)
   int pressure;
+  @HiveField(6)
   int humidity;
+  @HiveField(7)
+  int timezone;
+  @HiveField(8)
+  String weather;
 
   City({
     this.customName,
@@ -22,6 +31,8 @@ class City{
     this.maxTemperature,
     this.pressure,
     this.humidity,
+    this.timezone,
+    this.weather,
   });
   City.fromJson(Map<dynamic, dynamic> json, String custom) {
       name = json['name'];
@@ -31,24 +42,8 @@ class City{
       maxTemperature = json['main']['temp_max'].toInt();
       pressure = json['main']['pressure'].toInt();
       humidity = json['main']['humidity'].toInt();
+      timezone = json['timezone'].toInt();
+      weather = json['weather'][0]['main'];
+      print(weather);
   }
-
-  City copy({
-    String customName,
-    String name,
-  }) =>
-      City(
-        customName: customName ?? this.customName,
-        name: name ?? this.name,
-      );
-
-  static City deJson(Map<String, Object> json) => City(
-    customName: json[CityFields.customName] as String,
-    name: json[CityFields.name] as String,
-  );
-
-  Map<String, Object> toJson() => {
-    CityFields.customName: customName,
-    CityFields.name: name,
-  };
 }

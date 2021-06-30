@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tempo_clima/models/city.dart';
 import 'package:intl/intl.dart';
@@ -23,28 +23,21 @@ class _ChosenState extends State<Chosen> {
     super.didChangeDependencies();
     city = widget.city;
     cityRepository.fetchCityWeather(city.name).then((value) {
-      setState((){
+      setState(() {
         city = City.fromJson(jsonDecode(value), city.customName);
       });
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
-    DateTime now = DateTime.now();
+    Duration rola = new Duration(seconds: city.timezone + 10800);
+    DateTime now = DateTime.now().add(rola);
     String formattedDate = DateFormat('HH:mm').format(now);
-
-        // ModalRoute
-        // .of(context)
-        // .settings
-        // .arguments;
     return Scaffold(
       backgroundColor: Color.fromRGBO(31, 121, 214, 1),
       body: Padding(
-        padding: MediaQuery
-            .of(context)
-            .padding,
+        padding: MediaQuery.of(context).padding,
         child: Column(
           children: [
             Row(
@@ -77,14 +70,14 @@ class _ChosenState extends State<Chosen> {
                             child: Text(
                               city.customName,
                               style:
-                              TextStyle(color: Colors.white, fontSize: 30),
+                                  TextStyle(color: Colors.white, fontSize: 30),
                             ),
                           ),
                           FittedBox(
                             child: Text(
                               city.name,
                               style:
-                              TextStyle(color: Colors.grey, fontSize: 25),
+                                  TextStyle(color: Colors.grey, fontSize: 25),
                             ),
                           ),
                         ],
@@ -123,11 +116,32 @@ class _ChosenState extends State<Chosen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Icon(
-                        Icons.cloud_queue,
-                        color: Colors.white,
-                        size: 180,
-                      )
+                      if (city.weather == "Clear")
+                        Icon(
+                          Icons.wb_sunny_outlined,
+                          color: Colors.white,
+                          size: 180,
+                        )
+                      else if (city.weather == "Rain" ||
+                          city.weather == "Drizzle" ||
+                          city.weather == "Thunderstorm")
+                        Icon(
+                          CupertinoIcons.cloud_heavyrain,
+                          color: Colors.white,
+                          size: 180,
+                        )
+                      else if (city.weather == "Snow")
+                        Icon(
+                          Icons.ac_unit,
+                          color: Colors.white,
+                          size: 180,
+                        )
+                      else
+                        Icon(
+                          Icons.cloud_queue,
+                          color: Colors.white,
+                          size: 180,
+                        )
                     ],
                   ),
                 ),
@@ -217,7 +231,6 @@ class _ChosenState extends State<Chosen> {
                         )),
                     height: 210,
                     width: 340,
-
                     child: Column(
                       children: [
                         Row(
@@ -226,8 +239,8 @@ class _ChosenState extends State<Chosen> {
                               padding: const EdgeInsets.fromLTRB(20, 20, 0, 0),
                               child: Text(
                                 "Outros dados:",
-                                style:
-                                TextStyle(color: Colors.white,
+                                style: TextStyle(
+                                    color: Colors.white,
                                     fontSize: 38,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -264,7 +277,6 @@ class _ChosenState extends State<Chosen> {
                               ),
                             ),
                           ],
-
                         ),
                       ],
                     ),

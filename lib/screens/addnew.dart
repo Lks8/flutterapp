@@ -1,10 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-
 import '../main.dart';
 
 class AddNew extends StatefulWidget {
+
   @override
   AddNewState createState() {
     return new AddNewState();
